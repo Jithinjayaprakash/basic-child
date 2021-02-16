@@ -61,9 +61,15 @@ function change_role_name() {
 add_action('init', 'change_role_name');
 
 /***********************************************************
-    USER ROLES ENDS
+    DISABLE BACKEND ACCESS
 ***********************************************************/
-
+function disable_backend_for_specific_roles() {
+    if( is_admin() && !defined('DOING_AJAX') && ( current_user_can('subscriber') || current_user_can('contributor') ) ){
+      wp_redirect(home_url());
+      exit;
+    }
+  }
+  add_action('init','disable_backend_for_specific_roles');
 
 
 ?>
